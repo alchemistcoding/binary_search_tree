@@ -26,6 +26,7 @@ class Tree
   def include?(value)
     current = @root
     loop do
+      return false if current.data == nil
       return true if current.data == value
       if current.data > value
         return false if current.left == nil
