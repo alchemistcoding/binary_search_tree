@@ -81,6 +81,37 @@ class Tree
     yield root
  end
 
+ def height(value = @root.data)
+    current = @root
+    loop do
+      return nil if current == nil
+      if current.data > value
+        current = current.left
+      elsif current.data < value
+        current = current.right
+      else break
+      end
+    end
+
+    height_helper(current)
+ end
+
+ def depth(value)
+   current = @root
+   count = 0
+   loop do
+     return nil if current == nil
+     if current.data > value
+       current = current.left
+       count += 1
+     elsif current.data < value
+      current = current.right   
+      count += 1
+     else return count
+     end
+   end
+ end
+
  private
  def delete_helper(root, value)
   return nil if root == nil || root.data == nil
@@ -113,6 +144,11 @@ class Tree
    else root.right = insert_helper(root.right, value)
    end
    root
+ end
+
+ def height_helper(root)
+   return - 1 if root == nil
+   return [height_helper(root.left), height_helper(root.right)].max + 1
  end
 
 end
