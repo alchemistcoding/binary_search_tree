@@ -17,6 +17,7 @@ class Tree
 
     return nil if first > last
     mid = (first + last) / 2
+    return nil if array[mid] == nil
     left = build_tree(array, first, mid - 1)
     right = build_tree(array, mid + 1, last)
     
@@ -43,7 +44,17 @@ class Tree
   end
 
  def delete(value)
-   @root = delete_helper(@root, value)
+  @root = delete_helper(@root, value)
+ end
+
+ def level_order
+  return to_enum(:level_order) unless block_given?
+  queue = [@root]
+  while queue.length > 0
+    queue.push(queue[0].left) if queue[0].left
+    queue.push(queue[0].right) if queue[0].right
+    yield(queue.shift) 
+  end
  end
 
  private
@@ -81,5 +92,6 @@ class Tree
  end
 
 end
+
 
 
