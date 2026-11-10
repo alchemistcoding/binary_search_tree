@@ -112,6 +112,21 @@ class Tree
    end
  end
 
+ def balanced?
+  preorder do |node|
+    return false if (height_helper(node.left) - height_helper(node.right)).abs > 1
+  end
+  true
+ end
+
+ def rebalance
+   arr = []
+   preorder do |node|
+     arr.push(node.data)
+   end
+   @root = build_tree(arr.sort)
+ end
+
  private
  def delete_helper(root, value)
   return nil if root == nil || root.data == nil
