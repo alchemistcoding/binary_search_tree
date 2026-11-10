@@ -57,6 +57,30 @@ class Tree
   end
  end
 
+ def preorder(root = @root, &block)
+    return to_enum(:preorder) unless block_given?
+    return if root == nil
+    yield root
+    preorder(root.left, &block)
+    preorder(root.right, &block)
+ end
+
+ def inorder(root = @root, &block)
+    return to_enum(:inorder) unless block_given?
+    return if root == nil
+    inorder(root.left, &block)
+    yield root
+    inorder(root.right, &block)
+ end
+
+ def postorder(root = @root, &block)
+    return to_enum(:postorder) unless block_given?
+    return if root == nil
+    postorder(root.left, &block)
+    postorder(root.right, &block)
+    yield root
+ end
+
  private
  def delete_helper(root, value)
   return nil if root == nil || root.data == nil
@@ -92,6 +116,3 @@ class Tree
  end
 
 end
-
-
-
